@@ -46,30 +46,63 @@ export const ContactPage = () => {
 
     return (
         <Box display="flex" alignItems="center" flexDirection="column">
-            <Stack>
-            <h1>Contact Details</h1>
-            {contact && (
-                <>
-                    <Avatar src={contact.avatar_url} />
-                    <p>
-                        {contact.fields['first name'][0].value} {contact.fields['last name'][0].value}
-                    </p>
-                    <p>{contact.fields.email[0].value}</p>
-                    <Box>
-                        {tags.map((tag) => (
-                            <Chip key={tag.id} label={tag.tag} />
-                        ))}
-                    </Box>
-                    <TextField
-                        label="New Tag"
-                        value={newTag}
-                        onChange={(e) => setNewTag(e.target.value)}
-                        variant="outlined"
-                        margin="normal"
-                    />
-                    <Button onClick={handleAddTag}>Add Tag</Button>
-                </>
-            )}
+            <Stack
+                gap="26px"
+                sx={{
+                    '& .MuiFormControl-root': { margin: 0 },
+                    '& .MuiOutlinedInput-root': {
+                        borderRadius: 2,
+                        height: 48
+                    },
+                    width: '100%',
+                    maxWidth: '431px'
+                }}
+            >
+                <h1 className="text-[20px]">Contact Details</h1>
+                {contact && (
+                    <>
+                        <Box display="flex" gap="12px" alignItems="center">
+                            <Avatar
+                                src={contact.avatar_url}
+                                sx={{
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                    width: '83px',
+                                    height: '83px'
+                                }}
+                            />
+                            <Box display="flex" flexDirection="column" sx={{ fontSize: '16px', fontWeight: '500' }}>
+                                <Box display="flex">
+                                    <p>
+                                        {contact.fields['first name'][0].value} {contact.fields['last name'][0].value}
+                                    </p>
+                                </Box>
+                                <p>{contact.fields.email[0].value}</p>
+                            </Box>
+                        </Box>
+
+                        <Box>
+                            <p className="mb-3">Tags</p>
+                            {tags
+                                ? tags.map((tag) => <Chip key={tag.id} label={tag.tag} sx={{ borderRadius: '4px', marginRight: 1 }} />)
+                                : ''}
+                        </Box>
+                        <TextField
+                            label="Add new Tag"
+                            value={newTag}
+                            onChange={(e) => setNewTag(e.target.value)}
+                            variant="outlined"
+                            margin="normal"
+                        />
+                        <Button
+                            variant="outlined"
+                            onClick={handleAddTag}
+                            sx={{ color: '#191919', borderColor: '#AAAAAA', width: '100%', height: 44 }}
+                        >
+                            Add Tag
+                        </Button>
+                    </>
+                )}
             </Stack>
         </Box>
     );
