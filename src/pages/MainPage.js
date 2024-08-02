@@ -5,11 +5,11 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import IconButton from '@mui/material/IconButton';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { getContacts, deleteContacts, createContact } from '../api/axios';
 import { FormComponent } from './FormComponent';
@@ -22,7 +22,7 @@ export default function MainPage() {
         const fetchContacts = async () => {
             try {
                 const data = await getContacts();
-                console.log(data.resources);
+                // console.log(data);
                 setContacts(data.resources);
             } catch (err) {
                 setError('Failed to fetch contacts. Please try again later.');
@@ -43,10 +43,16 @@ export default function MainPage() {
             setError('Failed to delete contacts. Please try again later.');
         }
     };
-    const handleCreate = async (firstName, lastName, email) => {
+    const handleCreate = async (firstName, lastName, email, photoPreview) => {
         try {
             const newContact = await createContact(firstName, lastName, email);
-            setContacts([newContact, ...contacts]);
+            setContacts([
+                {
+                    ...newContact,
+                    avatar_url: photoPreview
+                },
+                ...contacts
+            ]);
         } catch (err) {
             setError('Failed to create contact. Please try again later.');
         }
@@ -69,21 +75,25 @@ export default function MainPage() {
                     {contacts.map((contact) => (
                         <ListItem key={contact.id}>
                             <ListItemAvatar>
-                                <Avatar>
+                                <Avatar
+                                    sx={{
+                                        objectFit: 'cover',
+                                        objectPosition: 'center'
+                                    }}
+                                >
                                     {contact.avatar_url ? (
-                                        <img
-                                            src={contact.avatar_url}
-                                            alt={`${contact.fields['first name']?.[0]?.value}`}
-                                        />
+                                        <img src={contact.avatar_url} alt="avatar" />
                                     ) : (
-                                        <AccountCircleOutlinedIcon sx={{ width: 59, height: 59, color: '#191919' }} />
+                                        <AccountCircleIcon sx={{ width: 59, height: 59, color: '#191919' }} />
                                     )}
                                 </Avatar>
                             </ListItemAvatar>
                             <Box sx={{ flex: 1 }}>
                                 <Stack direction="row">
                                     <ListItemText
-                                        primary={`${contact.fields['first name']?.[0]?.value || 'First Name'} ${contact.fields['last name']?.[0]?.value || 'Last Name'}`}
+                                        primary={`${contact.fields['first name']?.[0]?.value || 'First Name'} ${
+                                            contact.fields['last name']?.[0]?.value || 'Last Name'
+                                        }`}
                                         secondary={contact.fields.email?.[0]?.value || 'Email'}
                                         sx={{ marginBottom: 2 }}
                                     />

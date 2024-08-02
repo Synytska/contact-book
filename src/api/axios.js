@@ -8,7 +8,7 @@ const baseURL =
 const api = axios.create({
     baseURL,
     headers: {
-        Authorization: 'Bearer VlP9cwH6cc7Kg2LsNPXpAvF6QNmgZn',
+        Authorization: process.env.REACT_APP_API_TOKEN,
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
     }
@@ -49,6 +49,7 @@ export const createContact = async (firstName, lastName, email) => {
             privacy: { edit: null, read: null },
             owner_id: null
         });
+
         return response.data;
     } catch (error) {
         console.error('Error creating contacts:', error);
