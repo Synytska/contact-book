@@ -10,6 +10,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 
 import { getContacts, deleteContacts, createContact } from '../api/axios';
 import { FormComponent } from './FormComponent';
@@ -22,7 +23,6 @@ export default function MainPage() {
         const fetchContacts = async () => {
             try {
                 const data = await getContacts();
-                // console.log(data);
                 setContacts(data.resources);
             } catch (err) {
                 setError('Failed to fetch contacts. Please try again later.');
@@ -73,7 +73,7 @@ export default function MainPage() {
                     }}
                 >
                     {contacts.map((contact) => (
-                        <ListItem key={contact.id}>
+                        <ListItem key={contact.id} component={Link} to={`/contact/${contact.id}`}>
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{

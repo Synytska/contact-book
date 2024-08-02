@@ -5,7 +5,7 @@ const baseURL =
         ? 'https://cors-anywhere.herokuapp.com/https://live.devnimble.com/api/v1'
         : '/api/v1';
 
-const api = axios.create({
+export const api = axios.create({
     baseURL,
     headers: {
         Authorization: process.env.REACT_APP_API_TOKEN,
@@ -54,6 +54,29 @@ export const createContact = async (firstName, lastName, email) => {
     } catch (error) {
         console.error('Error creating contacts:', error);
         throw error;
+    }
+};
+
+export const getContactPage = async (contactId) => {
+    try {
+        const response = await api.get(`/contact/${contactId}`);
+        return response;
+    } catch (error) {
+        console.error('Error opening contact:', error);
+        throw error;
+    }
+};
+
+export const createTag = async (contactId, tags, newTag) => {
+    try {
+        const response = await api.put(`/contacts/${contactId}/tags`, {
+            tags: tags.map(tag => tag.tag).concat(newTag)
+        });
+        console.log(response.data)
+        console.log(response.data.tags)
+        return response.data.tags;
+    } catch (err) {
+        console.log(err.message);
     }
 };
 
