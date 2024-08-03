@@ -7,7 +7,6 @@ import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
 
-
 import { useState } from 'react';
 
 export const FormComponent = ({ onCreate }) => {
@@ -17,7 +16,6 @@ export const FormComponent = ({ onCreate }) => {
     const [emailError, setEmailError] = useState(null);
 
     const [photoPreview, setPhotoPreview] = useState('');
-
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -69,7 +67,7 @@ export const FormComponent = ({ onCreate }) => {
         }
     };
     return (
-        <div>
+        <div className="sticky top-[36px] h-screen">
             <h1 className="text-[20px]">Create Contact</h1>
             <Box
                 component="form"
