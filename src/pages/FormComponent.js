@@ -6,7 +6,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 
 
 import { useState } from 'react';
@@ -18,7 +17,6 @@ export const FormComponent = ({ onCreate }) => {
     const [emailError, setEmailError] = useState(null);
 
     const [photoPreview, setPhotoPreview] = useState('');
-    const navigate = useNavigate();
 
 
     const VisuallyHiddenInput = styled('input')({
@@ -50,7 +48,6 @@ export const FormComponent = ({ onCreate }) => {
             setLastName('');
             setEmail('');
             setPhotoPreview('');
-            navigate('/');
         } catch (err) {
             alert('Failed creating contacts. Please try again later.');
         }

@@ -59,11 +59,11 @@ export default function MainPage() {
     };
 
     return (
-        <div className="flex gap-10">
+        <div className="flex gap-12">
             <div className="sticky top-[36px] h-screen">
                 <FormComponent onCreate={handleCreate} />
             </div>
-            <div className="flex flex-col w-full">
+            <Box sx={{display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '558px'}}>
                 <p className="text-[20px]">Contacts</p>
 
                 <List
@@ -102,16 +102,16 @@ export default function MainPage() {
                                     </IconButton>
                                 </Stack>
 
-                                <Stack direction="row" spacing={1} sx={{ paddingBottom: '17px' }}>
+                                <Stack direction="row" sx={{ paddingBottom: '17px', flexWrap: 'wrap', gap: 1.5 }}>
                                     {contact.tags.map((index) => (
-                                        <Chip label={index.tag} />
+                                        <Chip label={index.tag} sx={{borderRadius: '4px'}}/>
                                     ))}
                                 </Stack>
                             </Box>
                         </ListItem>
                     ))}
                 </List>
-            </div>
+            </Box>
         </div>
     );
 }
